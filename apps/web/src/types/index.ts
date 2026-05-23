@@ -63,6 +63,7 @@ export interface Job {
   model: string
   status: JobStatus
   findings: Report | null
+  error_message: string | null
   created_at: string
   completed_at: string | null
 }

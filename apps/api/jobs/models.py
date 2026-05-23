@@ -25,6 +25,7 @@ class Job(Base):
     model = Column(String, nullable=False)           # e.g. gpt-4o
     status = Column(Enum(JobStatus), default=JobStatus.queued)
     findings = Column(JSON, nullable=True)           # structured gap report
+    error_message = Column(String, nullable=True)    # failure reason, shown to user
     report_path = Column(String, nullable=True)      # MinIO path to PDF report
     created_at = Column(DateTime, default=datetime.utcnow)
     completed_at = Column(DateTime, nullable=True)

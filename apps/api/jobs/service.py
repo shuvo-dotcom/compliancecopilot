@@ -56,6 +56,8 @@ class JobService:
         job = await self.db.get(Job, uuid.UUID(job_id))
         if job:
             job.status = status
+            if error:
+                job.error_message = error
             if status in (JobStatus.approved, JobStatus.failed):
                 from datetime import datetime
                 job.completed_at = datetime.utcnow()
@@ -75,6 +77,7 @@ class JobService:
             "model": job.model,
             "status": job.status.value,
             "findings": job.findings,
+            "error_message": job.error_message,
             "created_at": job.created_at.isoformat(),
             "completed_at": job.completed_at.isoformat() if job.completed_at else None,
         }

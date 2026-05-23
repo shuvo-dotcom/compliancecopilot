@@ -70,8 +70,9 @@ export default function JobDetailPage() {
         )}
 
         {job.status === 'failed' && (
-          <div className="p-6 bg-red-50 border border-red-200 rounded-xl text-red-700">
-            Analysis failed. Please check your LLM key and try again.
+          <div className="p-6 bg-red-50 border border-red-200 rounded-xl text-red-700 space-y-1">
+            <p className="font-medium">Analysis failed</p>
+            <p className="text-sm">{job.error_message || 'Please check your LLM key and model, then resubmit.'}</p>
           </div>
         )}
       </main>

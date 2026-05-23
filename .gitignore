@@ -3,7 +3,7 @@ node_modules/
 *.pyc
 __pycache__/
 .env
-*.tsbuildinfo
+tsconfig.tsbuildinfo
 dist/
 build/
 *.egg-info/

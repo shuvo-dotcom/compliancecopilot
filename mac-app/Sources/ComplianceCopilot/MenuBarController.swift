@@ -1,10 +1,9 @@
 import AppKit
-import WebKit
 
-class MenuBarController: NSObject, NSWindowDelegate {
+class MenuBarController: NSObject {
     private var statusItem: NSStatusItem!
-    private var window: NSWindow?
     private let docker: DockerManager
+    private let appURL = URL(string: "http://localhost:3000")!
 
     init(docker: DockerManager) {
         self.docker = docker
@@ -19,7 +18,7 @@ class MenuBarController: NSObject, NSWindowDelegate {
                                 accessibilityDescription: "ComplianceCopilot")
         }
         let menu = NSMenu()
-        menu.addItem(item("Open ComplianceCopilot", action: #selector(openWindow), key: "o"))
+        menu.addItem(item("Open ComplianceCopilot", action: #selector(openInBrowser), key: "o"))
         menu.addItem(.separator())
         menu.addItem(item("Start Stack", action: #selector(startStack), key: ""))
         menu.addItem(item("Stop Stack",  action: #selector(stopStack),  key: ""))
@@ -34,32 +33,17 @@ class MenuBarController: NSObject, NSWindowDelegate {
         return i
     }
 
-    @objc func openWindow() {
-        if window == nil {
-            let wv = WKWebView(frame: NSRect(x: 0, y: 0, width: 1280, height: 820))
-            wv.load(URLRequest(url: URL(string: "http://localhost:3000")!))
-            let win = NSWindow(
-                contentRect: NSRect(x: 0, y: 0, width: 1280, height: 820),
-                styleMask: [.titled, .closable, .miniaturizable, .resizable, .fullSizeContentView],
-                backing: .buffered, defer: false)
-            win.title = "ComplianceCopilot"
-            win.contentView = wv
-            win.center()
-            win.delegate = self
-            win.isReleasedWhenClosed = false
-            window = win
-        }
-        window?.makeKeyAndOrderFront(nil)
-        NSApp.activate(ignoringOtherApps: true)
+    @objc func openInBrowser() {
+        NSWorkspace.shared.open(appURL)
     }
 
     @objc func startStack() {
         docker.start { _ in
-            DispatchQueue.main.asyncAfter(deadline: .now() + 4) { self.openWindow() }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
+                self.openInBrowser()
+            }
         }
     }
 
     @objc func stopStack() { docker.stop() }
-
-    func windowWillClose(_ notification: Notification) { window = nil }
 }

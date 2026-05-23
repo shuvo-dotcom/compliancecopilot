@@ -8,7 +8,7 @@ from core.database import init_db
 from core.redis import close_redis
 from auth.router import router as auth_router
 from jobs.router import router as jobs_router
-from queue.router import router as queue_router
+from review_queue.router import router as queue_router
 
 
 @asynccontextmanager

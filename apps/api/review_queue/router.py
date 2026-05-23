@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Request, HTTPException, Depends
-from queue.service import QueueService
+from review_queue.service import QueueService
 
 router = APIRouter(prefix="/queue", tags=["queue"])
 

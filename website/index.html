@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ComplianceCopilot — Self-Hosted AI Compliance Reviewer</title>
+  <meta name="description" content="Turn policy documents into audit-ready gap reports against GDPR and EU AI Act. Runs entirely on your machine. Zero data leaves your device." />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: { 50:'#f0f9ff', 100:'#e0f2fe', 500:'#0ea5e9', 600:'#0284c7', 700:'#0369a1', 900:'#0c4a6e' }
+          },
+          fontFamily: { sans: ['Inter','system-ui','sans-serif'] }
+        }
+      }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    .gradient-bg { background: linear-gradient(135deg, #0c1a2e 0%, #0f2847 50%, #0c1a2e 100%); }
+    .glass { background: rgba(255,255,255,0.05); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.1); }
+    .glow { box-shadow: 0 0 40px rgba(14,165,233,0.15); }
+  </style>
+</head>
+<body class="font-sans bg-slate-950 text-white antialiased">
+
+  <!-- Nav -->
+  <nav class="fixed top-0 left-0 right-0 z-50 border-b border-white/10 bg-slate-950/80 backdrop-blur-md">
+    <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-2.5">
+        <svg class="w-7 h-7 text-brand-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+        </svg>
+        <span class="font-bold text-lg tracking-tight">ComplianceCopilot</span>
+      </div>
+      <div class="flex items-center gap-6">
+        <a href="#features" class="text-sm text-slate-400 hover:text-white transition-colors">Features</a>
+        <a href="#how-it-works" class="text-sm text-slate-400 hover:text-white transition-colors">How it works</a>
+        <a href="https://github.com/shuvo-dotcom/compliancecopilot" target="_blank" class="text-sm text-slate-400 hover:text-white transition-colors flex items-center gap-1.5">
+          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+          GitHub
+        </a>
+        <a href="#download" class="text-sm font-medium px-4 py-2 bg-brand-600 hover:bg-brand-500 rounded-lg transition-colors">
+          Download
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="gradient-bg pt-32 pb-24 px-6 relative overflow-hidden">
+    <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(14,165,233,0.08),transparent_70%)]"></div>
+    <div class="max-w-4xl mx-auto text-center relative">
+      <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium text-brand-400 border border-brand-500/30 bg-brand-500/10 mb-8">
+        <span class="w-1.5 h-1.5 bg-brand-400 rounded-full animate-pulse"></span>
+        Open source · Self-hosted · Zero telemetry
+      </div>
+      <h1 class="text-5xl sm:text-6xl font-extrabold leading-tight tracking-tight mb-6">
+        AI compliance reviews<br />
+        <span class="text-brand-500">on your machine.</span>
+      </h1>
+      <p class="text-xl text-slate-400 max-w-2xl mx-auto mb-10 leading-relaxed">
+        Turn policy documents into audit-ready gap reports against <strong class="text-white">GDPR</strong> and <strong class="text-white">EU AI Act</strong>.
+        Powered by any LLM. Zero data leaves your device. One command to run.
+      </p>
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <a href="#download" class="inline-flex items-center gap-2.5 px-6 py-3.5 bg-brand-600 hover:bg-brand-500 text-white font-semibold rounded-xl transition-colors glow text-base">
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+          </svg>
+          Download for macOS
+        </a>
+        <a href="https://github.com/shuvo-dotcom/compliancecopilot" target="_blank" class="inline-flex items-center gap-2 px-6 py-3.5 border border-white/20 hover:border-white/40 text-white font-medium rounded-xl transition-colors text-base">
+          View on GitHub
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+        </a>
+      </div>
+      <p class="mt-5 text-sm text-slate-500">macOS · Requires Docker Desktop · Free &amp; open source</p>
+    </div>
+  </section>
+
+  <!-- Demo Video -->
+  <section id="demo" class="py-20 px-6 bg-slate-950">
+    <div class="max-w-4xl mx-auto">
+      <div class="text-center mb-10">
+        <h2 class="text-3xl font-bold mb-3">See it in action</h2>
+        <p class="text-slate-400">Watch how ComplianceCopilot analyses a policy document in minutes.</p>
+      </div>
+      <!-- Video embed — replace src with your Loom/YouTube embed URL -->
+      <div class="relative rounded-2xl overflow-hidden border border-white/10 bg-slate-900 aspect-video flex items-center justify-center glow">
+        <!-- PASTE YOUR LOOM OR YOUTUBE EMBED HERE -->
+        <!-- Example: <iframe src="https://www.loom.com/embed/YOUR_VIDEO_ID" frameborder="0" allowfullscreen class="absolute inset-0 w-full h-full"></iframe> -->
+        <div class="text-center py-20 px-8">
+          <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-brand-500/20 flex items-center justify-center">
+            <svg class="w-8 h-8 text-brand-400" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M8 5v14l11-7z"/>
+            </svg>
+          </div>
+          <p class="text-slate-400 text-sm">Demo video coming soon</p>
+          <p class="text-slate-600 text-xs mt-1">Replace this placeholder with a Loom or YouTube embed</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section id="features" class="py-20 px-6 bg-slate-900/50">
+    <div class="max-w-6xl mx-auto">
+      <div class="text-center mb-14">
+        <h2 class="text-3xl font-bold mb-3">Everything you need. Nothing you don't.</h2>
+        <p class="text-slate-400 max-w-xl mx-auto">Built for compliance teams who can't risk sensitive documents leaving the building.</p>
+      </div>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+        <div class="glass rounded-2xl p-6">
+          <div class="w-10 h-10 rounded-xl bg-brand-500/20 flex items-center justify-center mb-4">
+            <svg class="w-5 h-5 text-brand-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+          </div>
+          <h3 class="font-semibold text-white mb-2">Zero data egress</h3>
+          <p class="text-sm text-slate-400 leading-relaxed">Your documents, credentials, and reports never leave your machine. Postgres, Redis, and MinIO all run locally in Docker.</p>
+        </div>
+
+        <div class="glass rounded-2xl p-6">
+          <div class="w-10 h-10 rounded-xl bg-brand-500/20 flex items-center justify-center mb-4">
+            <svg class="w-5 h-5 text-brand-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"/></svg>
+          </div>
+          <h3 class="font-semibold text-white mb-2">Passkey auth only</h3>
+          <p class="text-sm text-slate-400 leading-relaxed">No passwords. No OAuth. WebAuthn passkeys (Touch ID, Face ID, security key) — nothing sensitive stored in the database.</p>
+        </div>
+
+        <div class="glass rounded-2xl p-6">
+          <div class="w-10 h-10 rounded-xl bg-brand-500/20 flex items-center justify-center mb-4">
+            <svg class="w-5 h-5 text-brand-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+          </div>
+          <h3 class="font-semibold text-white mb-2">Any LLM provider</h3>
+          <p class="text-sm text-slate-400 leading-relaxed">OpenAI, Anthropic, Gemini, Ollama (local), Groq, Mistral, Azure — via LiteLLM. Your API key lives in browser memory only.</p>
+        </div>
+
+        <div class="glass rounded-2xl p-6">
+          <div class="w-10 h-10 rounded-xl bg-brand-500/20 flex items-center justify-center mb-4">
+            <svg class="w-5 h-5 text-brand-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
+          </div>
+          <h3 class="font-semibold text-white mb-2">Human approval queue</h3>
+          <p class="text-sm text-slate-400 leading-relaxed">Every report goes through a human review step before it's finalised. Edit individual findings, approve or reject the whole report.</p>
+        </div>
+
+        <div class="glass rounded-2xl p-6">
+          <div class="w-10 h-10 rounded-xl bg-brand-500/20 flex items-center justify-center mb-4">
+            <svg class="w-5 h-5 text-brand-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z"/></svg>
+          </div>
+          <h3 class="font-semibold text-white mb-2">YAML frameworks</h3>
+          <p class="text-sm text-slate-400 leading-relaxed">GDPR and EU AI Act ship out of the box. Add any framework by dropping a YAML file — no code changes needed.</p>
+        </div>
+
+        <div class="glass rounded-2xl p-6">
+          <div class="w-10 h-10 rounded-xl bg-brand-500/20 flex items-center justify-center mb-4">
+            <svg class="w-5 h-5 text-brand-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+          </div>
+          <h3 class="font-semibold text-white mb-2">One command setup</h3>
+          <p class="text-sm text-slate-400 leading-relaxed">The macOS app handles everything. Or run <code class="text-brand-400 text-xs bg-brand-500/10 px-1.5 py-0.5 rounded">docker compose up</code> yourself — full stack in under a minute.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- How it works -->
+  <section id="how-it-works" class="py-20 px-6 bg-slate-950">
+    <div class="max-w-4xl mx-auto">
+      <div class="text-center mb-14">
+        <h2 class="text-3xl font-bold mb-3">How it works</h2>
+        <p class="text-slate-400">Six AI agents collaborate to produce a thorough gap report.</p>
+      </div>
+      <div class="relative">
+        <div class="absolute left-6 top-0 bottom-0 w-px bg-gradient-to-b from-brand-500/60 via-brand-500/20 to-transparent hidden sm:block"></div>
+        <div class="space-y-8">
+          {[
+            ["01", "Upload", "Drop a PDF, DOCX, or TXT policy document."],
+            ["02", "Chunk", "The document is split into overlapping chunks and embedded into pgvector."],
+            ["03", "Retrieve", "Relevant chunks are matched to each framework requirement."],
+            ["04", "Analyse", "The Gap Analyzer checks each requirement against the policy excerpts."],
+            ["05", "Score", "Findings are risk-scored and prioritised for remediation."],
+            ["06", "Review &amp; Export", "A human reviews, edits, and approves the report before it's finalised."],
+          ].join("")}
+        </div>
+      </div>
+
+      <!-- Static steps since this is plain HTML -->
+      <div class="relative mt-0">
+        <div class="absolute left-[1.35rem] top-3 bottom-3 w-px bg-gradient-to-b from-brand-500/50 via-brand-500/20 to-transparent hidden sm:block"></div>
+        <div class="space-y-6">
+          <div class="flex gap-5 items-start">
+            <div class="flex-shrink-0 w-11 h-11 rounded-full bg-brand-600 flex items-center justify-center text-xs font-bold z-10">01</div>
+            <div class="pt-2"><h4 class="font-semibold text-white">Upload</h4><p class="text-sm text-slate-400 mt-0.5">Drop a PDF, DOCX, or TXT policy document into the dashboard.</p></div>
+          </div>
+          <div class="flex gap-5 items-start">
+            <div class="flex-shrink-0 w-11 h-11 rounded-full bg-brand-600/80 flex items-center justify-center text-xs font-bold z-10">02</div>
+            <div class="pt-2"><h4 class="font-semibold text-white">Chunk &amp; Embed</h4><p class="text-sm text-slate-400 mt-0.5">The document is split into overlapping chunks and stored in pgvector for semantic search.</p></div>
+          </div>
+          <div class="flex gap-5 items-start">
+            <div class="flex-shrink-0 w-11 h-11 rounded-full bg-brand-600/60 flex items-center justify-center text-xs font-bold z-10">03</div>
+            <div class="pt-2"><h4 class="font-semibold text-white">Retrieve</h4><p class="text-sm text-slate-400 mt-0.5">Relevant excerpts are matched to each GDPR or EU AI Act requirement.</p></div>
+          </div>
+          <div class="flex gap-5 items-start">
+            <div class="flex-shrink-0 w-11 h-11 rounded-full bg-brand-600/50 flex items-center justify-center text-xs font-bold z-10">04</div>
+            <div class="pt-2"><h4 class="font-semibold text-white">Gap Analysis</h4><p class="text-sm text-slate-400 mt-0.5">Each requirement is checked — Compliant, Partial, or Missing — with citations from your document.</p></div>
+          </div>
+          <div class="flex gap-5 items-start">
+            <div class="flex-shrink-0 w-11 h-11 rounded-full bg-brand-600/40 flex items-center justify-center text-xs font-bold z-10">05</div>
+            <div class="pt-2"><h4 class="font-semibold text-white">Risk Scoring</h4><p class="text-sm text-slate-400 mt-0.5">Findings are prioritised by severity and remediation urgency.</p></div>
+          </div>
+          <div class="flex gap-5 items-start">
+            <div class="flex-shrink-0 w-11 h-11 rounded-full bg-brand-600/30 flex items-center justify-center text-xs font-bold z-10">06</div>
+            <div class="pt-2"><h4 class="font-semibold text-white">Human Review &amp; Export</h4><p class="text-sm text-slate-400 mt-0.5">You review, edit findings, and approve — report is never finalised without human sign-off.</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Download -->
+  <section id="download" class="py-24 px-6 gradient-bg relative overflow-hidden">
+    <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,rgba(14,165,233,0.1),transparent_70%)]"></div>
+    <div class="max-w-2xl mx-auto text-center relative">
+      <div class="w-16 h-16 mx-auto mb-6 rounded-2xl bg-brand-500/20 flex items-center justify-center">
+        <svg class="w-8 h-8 text-brand-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+        </svg>
+      </div>
+      <h2 class="text-4xl font-extrabold mb-4">Download ComplianceCopilot</h2>
+      <p class="text-slate-400 mb-8 text-lg">Free. Open source. Runs entirely on your Mac.</p>
+
+      <a
+        href="https://github.com/shuvo-dotcom/compliancecopilot/releases/latest/download/ComplianceCopilot.dmg"
+        class="inline-flex items-center gap-3 px-8 py-4 bg-brand-600 hover:bg-brand-500 text-white font-bold rounded-2xl transition-colors glow text-lg mb-4"
+      >
+        <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+        </svg>
+        Download for macOS
+      </a>
+
+      <div class="mt-4 flex flex-col items-center gap-2">
+        <p class="text-sm text-slate-500">macOS 13 Ventura or later · Apple Silicon &amp; Intel · Requires <a href="https://www.docker.com/products/docker-desktop/" target="_blank" class="text-brand-400 hover:underline">Docker Desktop</a></p>
+        <a href="https://github.com/shuvo-dotcom/compliancecopilot/releases" target="_blank" class="text-xs text-slate-600 hover:text-slate-400 transition-colors">All releases &amp; changelog →</a>
+      </div>
+
+      <div class="mt-12 p-5 glass rounded-2xl text-left">
+        <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3">Or run with Docker</p>
+        <pre class="text-sm text-brand-300 overflow-x-auto leading-relaxed"><code>git clone https://github.com/shuvo-dotcom/compliancecopilot
+cd compliancecopilot
+cp .env.example .env
+docker compose up</code></pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="border-t border-white/10 py-10 px-6 bg-slate-950">
+    <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-2.5">
+        <svg class="w-5 h-5 text-brand-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+        </svg>
+        <span class="text-sm font-semibold">ComplianceCopilot</span>
+        <span class="text-slate-600 text-sm">· MIT License</span>
+      </div>
+      <div class="flex items-center gap-6 text-sm text-slate-500">
+        <a href="https://github.com/shuvo-dotcom/compliancecopilot" target="_blank" class="hover:text-white transition-colors">GitHub</a>
+        <a href="https://github.com/shuvo-dotcom/compliancecopilot/issues" target="_blank" class="hover:text-white transition-colors">Report a bug</a>
+        <a href="https://github.com/shuvo-dotcom/compliancecopilot/blob/main/README.md" target="_blank" class="hover:text-white transition-colors">Docs</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        e.preventDefault()
+        document.querySelector(a.getAttribute('href'))?.scrollIntoView({ behavior: 'smooth' })
+      })
+    })
+  </script>
+</body>
+</html>

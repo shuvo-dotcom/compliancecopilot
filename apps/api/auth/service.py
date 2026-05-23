@@ -1,8 +1,9 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
+from sqlalchemy.exc import IntegrityError
 from auth.models import User, WebAuthnCredential
 from core.database import get_db
-from fastapi import Depends
+from fastapi import Depends, HTTPException
 import uuid
 
 
@@ -28,7 +29,11 @@ class AuthService:
             sign_count=sign_count,
         )
         self.db.add(cred)
-        await self.db.commit()
+        try:
+            await self.db.commit()
+        except IntegrityError:
+            await self.db.rollback()
+            raise HTTPException(status_code=409, detail="Username already taken. Please sign in instead.")
         await self.db.refresh(user)
         return user
 

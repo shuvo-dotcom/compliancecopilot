@@ -12,7 +12,10 @@ export async function registerPasskey(username: string): Promise<void> {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ username }),
   })
-  if (!optionsRes.ok) throw new Error('Failed to begin registration')
+  if (!optionsRes.ok) {
+    const err = await optionsRes.json().catch(() => ({}))
+    throw new Error(err.detail || 'Failed to begin registration')
+  }
   const options = await optionsRes.json()
 
   const credential = await startRegistration(options)

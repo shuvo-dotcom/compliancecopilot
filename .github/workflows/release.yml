@@ -1,0 +1,40 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build-dmg:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install create-dmg
+        run: brew install create-dmg
+
+      - name: Build Swift app
+        run: |
+          cd mac-app
+          xcodebuild -scheme ComplianceCopilot -configuration Release \
+            -archivePath build/ComplianceCopilot.xcarchive archive
+          xcodebuild -exportArchive \
+            -archivePath build/ComplianceCopilot.xcarchive \
+            -exportPath build/export \
+            -exportOptionsPlist ExportOptions.plist
+
+      - name: Create DMG
+        run: |
+          create-dmg \
+            --volname "ComplianceCopilot" \
+            --window-size 600 400 \
+            --icon-size 100 \
+            --app-drop-link 450 200 \
+            "ComplianceCopilot-${{ github.ref_name }}.dmg" \
+            "mac-app/build/export/ComplianceCopilot.app"
+
+      - name: Upload to GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: ComplianceCopilot-${{ github.ref_name }}.dmg

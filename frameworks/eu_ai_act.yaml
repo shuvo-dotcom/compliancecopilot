@@ -1,0 +1,51 @@
+id: eu_ai_act
+name: EU Artificial Intelligence Act
+version: "2024"
+jurisdiction: EU
+requirements:
+  - id: euaia-art-9
+    article: "Article 9"
+    title: Risk management system
+    description: High-risk AI systems shall have a risk management system.
+    checks:
+      - Does the policy define a risk management process for AI systems?
+      - Are residual risks identified and documented?
+      - Is there a process for continuous risk monitoring?
+    severity: critical
+
+  - id: euaia-art-10
+    article: "Article 10"
+    title: Data and data governance
+    description: Training data must meet quality criteria.
+    checks:
+      - Are data governance practices for AI training data described?
+      - Is data quality assessment mentioned?
+      - Are biases in training data addressed?
+    severity: high
+
+  - id: euaia-art-13
+    article: "Article 13"
+    title: Transparency and provision of information
+    description: High-risk AI systems shall be transparent.
+    checks:
+      - Does the policy ensure users know they are interacting with AI?
+      - Is there documentation of AI system capabilities and limitations?
+    severity: high
+
+  - id: euaia-art-14
+    article: "Article 14"
+    title: Human oversight
+    description: High-risk AI systems must allow human oversight.
+    checks:
+      - Does the policy define human oversight mechanisms for AI decisions?
+      - Can humans intervene or override AI decisions?
+    severity: critical
+
+  - id: euaia-art-17
+    article: "Article 17"
+    title: Quality management system
+    description: Providers of high-risk AI must implement a quality management system.
+    checks:
+      - Is there a defined quality management process for AI systems?
+      - Are testing and validation procedures documented?
+    severity: high

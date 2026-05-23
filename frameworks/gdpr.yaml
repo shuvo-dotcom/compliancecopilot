@@ -1,0 +1,55 @@
+id: gdpr
+name: General Data Protection Regulation
+version: "2018"
+jurisdiction: EU
+requirements:
+  - id: gdpr-art-5
+    article: "Article 5"
+    title: Principles relating to processing of personal data
+    description: Personal data shall be processed lawfully, fairly and transparently.
+    checks:
+      - Does the policy define the lawful basis for processing personal data?
+      - Is there a clear transparency notice to data subjects?
+      - Is data minimisation explicitly addressed?
+      - Are retention periods defined?
+    severity: critical
+
+  - id: gdpr-art-13
+    article: "Article 13"
+    title: Information to be provided where personal data collected from data subject
+    description: Controller must provide information at the time of collection.
+    checks:
+      - Does the policy specify what information is provided at collection?
+      - Are contact details of the DPO included?
+      - Is the right to withdraw consent mentioned?
+    severity: high
+
+  - id: gdpr-art-17
+    article: "Article 17"
+    title: Right to erasure
+    description: Data subjects have the right to erasure of their personal data.
+    checks:
+      - Does the policy define a process for handling erasure requests?
+      - Is there a defined response time for erasure requests?
+      - Are exceptions to erasure documented?
+    severity: high
+
+  - id: gdpr-art-32
+    article: "Article 32"
+    title: Security of processing
+    description: Appropriate technical and organisational measures to ensure security.
+    checks:
+      - Are encryption measures described?
+      - Is pseudonymisation mentioned?
+      - Is there a process for ongoing security assessment?
+      - Are data breach notification procedures defined?
+    severity: critical
+
+  - id: gdpr-art-35
+    article: "Article 35"
+    title: Data protection impact assessment
+    description: DPIA required for high-risk processing.
+    checks:
+      - Does the policy identify when a DPIA is required?
+      - Is there a DPIA process defined?
+    severity: high

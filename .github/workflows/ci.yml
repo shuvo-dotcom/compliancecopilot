@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  lint-and-type-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install Python deps
+        run: |
+          cd apps/api
+          pip install -r requirements.txt
+          pip install ruff mypy pydantic-settings
+
+      - name: Lint (ruff)
+        run: cd apps/api && ruff check .
+
+      - name: Type check (mypy)
+        run: cd apps/api && mypy . --ignore-missing-imports
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Node deps
+        run: cd apps/web && npm ci
+
+      - name: Type check (tsc)
+        run: cd apps/web && npx tsc --noEmit

@@ -1,6 +1,8 @@
 import uuid
+import json
 from typing import cast
 from fastapi import APIRouter, Request, HTTPException, Depends
+from fastapi.responses import JSONResponse
 from webauthn import (
     generate_registration_options,
     verify_registration_response,
@@ -39,7 +41,7 @@ async def register_begin(request: Request):
     request.session["username"] = username
 
     from webauthn.helpers import options_to_json
-    return options_to_json(options)
+    return JSONResponse(content=json.loads(options_to_json(options)))
 
 
 @router.post("/register/complete")
@@ -80,7 +82,7 @@ async def login_begin(request: Request):
     request.session["auth_challenge"] = base64.b64encode(options.challenge).decode()
 
     from webauthn.helpers import options_to_json
-    return options_to_json(options)
+    return JSONResponse(content=json.loads(options_to_json(options)))
 
 
 @router.post("/login/complete")

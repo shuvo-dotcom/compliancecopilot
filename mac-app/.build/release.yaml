@@ -1,0 +1,77 @@
+client:
+  name: basic
+  file-system: device-agnostic
+tools: {}
+targets:
+  "ComplianceCopilot-arm64-apple-macosx15.0-release.exe": ["<ComplianceCopilot-arm64-apple-macosx15.0-release.exe>"]
+  "ComplianceCopilot-arm64-apple-macosx15.0-release.module": ["<ComplianceCopilot-arm64-apple-macosx15.0-release.module>"]
+  "PackageStructure": ["<PackageStructure>"]
+  "main": ["<ComplianceCopilot-arm64-apple-macosx15.0-release.exe>","<ComplianceCopilot-arm64-apple-macosx15.0-release.module>"]
+  "test": ["<ComplianceCopilot-arm64-apple-macosx15.0-release.exe>","<ComplianceCopilot-arm64-apple-macosx15.0-release.module>"]
+default: "main"
+nodes:
+  "/Users/apple/Desktop/compliancecopilot-main/mac-app/Sources/ComplianceCopilot/":
+    is-directory-structure: true
+    content-exclusion-patterns: [".git",".build"]
+commands:
+  "/Users/apple/Desktop/compliancecopilot-main/mac-app/.build/arm64-apple-macosx/release/ComplianceCopilot.build/sources":
+    tool: write-auxiliary-file
+    inputs: ["<sources-file-list>","/Users/apple/Desktop/compliancecopilot-main/mac-app/Sources/ComplianceCopilot/AppDelegate.swift","/Users/apple/Desktop/compliancecopilot-main/mac-app/Sources/ComplianceCopilot/DockerManager.swift","/Users/apple/Desktop/compliancecopilot-main/mac-app/Sources/ComplianceCopilot/MenuBarController.swift","/Users/apple/Desktop/compliancecopilot-main/mac-app/Sources/ComplianceCopilot/main.swift","/Users/apple/Desktop/compliancecopilot-main/mac-app/.build/arm64-apple-macosx/release/ComplianceCopilot.build/DerivedSources/resource_bundle_accessor.swift"]
+    outputs: ["/Users/apple/Desktop/compliancecopilot-main/mac-app/.build/arm64-apple-macosx/release/ComplianceCopilot.build/sources"]
+    description: "Write auxiliary file /Users/apple/Desktop/compliancecopilot-main/mac-app/.build/arm64-apple-macosx/release/ComplianceCopilot.build/sources"
+
+  "/Users/apple/Desktop/compliancecopilot-main/mac-app/.build/arm64-apple-macosx/release/ComplianceCopilot.product/Objects.LinkFileList":
+    tool: write-auxiliary-file
+    inputs: ["<link-file-list>","/Users/apple/Desktop/compliancecopilot-main/mac-app/.build/arm64-apple-macosx/release/ComplianceCopilot.build/AppDelegate.swift.o","/Users/apple/Desktop/compliancecopilot-main/mac-app/.build/arm64-apple-macosx/release/ComplianceCopilot.build/DockerManager.swift.o","/Users/apple/Desktop/compliancecopilot-main/mac-app/.build/arm64-apple-macosx/release/ComplianceCopilot.build/MenuBarController.swift.o","/Users/apple/Desktop/compliancecopilot-main/mac-app/.build/arm64-apple-macosx/release/ComplianceCopilot.build/main.swift.o","/Users/apple/Desktop/compliancecopilot-main/mac-app/.build/arm64-apple-macosx/release/ComplianceCopilot.build/resource_bundle_accessor.swift.o"]
+    outputs: ["/Users/apple/Desktop/compliancecopilot-main/mac-app/.build/arm64-apple-macosx/release/ComplianceCopilot.product/Objects.LinkFileList"]
+    description: "Write auxiliary file /Users/apple/Desktop/compliancecopilot-main/mac-app/.build/arm64-apple-macosx/release/ComplianceCopilot.product/Objects.LinkFileList"
+
+  "/Users/apple/Desktop/compliancecopilot-main/mac-app/.build/arm64-apple-macosx/release/ComplianceCopilot_ComplianceCopilot.bundle/docker-compose.yml":
+    tool: copy-tool
+    inputs: ["/Users/apple/Desktop/compliancecopilot-main/mac-app/Sources/ComplianceCopilot/Resources/docker-compose.yml"]
+    outputs: ["/Users/apple/Desktop/compliancecopilot-main/mac-app/.build/arm64-apple-macosx/release/ComplianceCopilot_ComplianceCopilot.bundle/docker-compose.yml"]
+    description: "Copying /Users/apple/Desktop/compliancecopilot-main/mac-app/Sources/ComplianceCopilot/Resources/docker-compose.yml"
+
+  "/Users/apple/Desktop/compliancecopilot-main/mac-app/.build/arm64-apple-macosx/release/swift-version--1AB21518FC5DEDBE.txt":
+    tool: write-auxiliary-file
+    inputs: ["<swift-get-version>","/Library/Developer/CommandLineTools/usr/bin/swiftc"]
+    outputs: ["/Users/apple/Desktop/compliancecopilot-main/mac-app/.build/arm64-apple-macosx/release/swift-version--1AB21518FC5DEDBE.txt"]
+    always-out-of-date: "true"
+    description: "Write auxiliary file /Users/apple/Desktop/compliancecopilot-main/mac-app/.build/arm64-apple-macosx/release/swift-version--1AB21518FC5DEDBE.txt"
+
+  "<ComplianceCopilot-arm64-apple-macosx15.0-release.exe>":
+    tool: phony
+    inputs: ["/Users/apple/Desktop/compliancecopilot-main/mac-app/.build/arm64-apple-macosx/release/ComplianceCopilot"]
+    outputs: ["<ComplianceCopilot-arm64-apple-macosx15.0-release.exe>"]
+
+  "<ComplianceCopilot-arm64-apple-macosx15.0-release.module>":
+    tool: phony
+    inputs: ["/Users/apple/Desktop/compliancecopilot-main/mac-app/.build/arm64-apple-macosx/release/ComplianceCopilot.build/AppDelegate.swift.o","/Users/apple/Desktop/compliancecopilot-main/mac-app/.build/arm64-apple-macosx/release/ComplianceCopilot.build/DockerManager.swift.o","/Users/apple/Desktop/compliancecopilot-main/mac-app/.build/arm64-apple-macosx/release/ComplianceCopilot.build/MenuBarController.swift.o","/Users/apple/Desktop/compliancecopilot-main/mac-app/.build/arm64-apple-macosx/release/ComplianceCopilot.build/main.swift.o","/Users/apple/Desktop/compliancecopilot-main/mac-app/.build/arm64-apple-macosx/release/ComplianceCopilot.build/resource_bundle_accessor.swift.o","/Users/apple/Desktop/compliancecopilot-main/mac-app/.build/arm64-apple-macosx/release/Modules/ComplianceCopilot.swiftmodule"]
+    outputs: ["<ComplianceCopilot-arm64-apple-macosx15.0-release.module>"]
+
+  "C.ComplianceCopilot-arm64-apple-macosx15.0-release.exe":
+    tool: shell
+    inputs: ["/Users/apple/Desktop/compliancecopilot-main/mac-app/.build/arm64-apple-macosx/release/ComplianceCopilot.build/AppDelegate.swift.o","/Users/apple/Desktop/compliancecopilot-main/mac-app/.build/arm64-apple-macosx/release/ComplianceCopilot.build/DockerManager.swift.o","/Users/apple/Desktop/compliancecopilot-main/mac-app/.build/arm64-apple-macosx/release/ComplianceCopilot.build/MenuBarController.swift.o","/Users/apple/Desktop/compliancecopilot-main/mac-app/.build/arm64-apple-macosx/release/ComplianceCopilot.build/main.swift.o","/Users/apple/Desktop/compliancecopilot-main/mac-app/.build/arm64-apple-macosx/release/ComplianceCopilot.build/resource_bundle_accessor.swift.o","/Users/apple/Desktop/compliancecopilot-main/mac-app/.build/arm64-apple-macosx/release/ComplianceCopilot.product/Objects.LinkFileList"]
+    outputs: ["/Users/apple/Desktop/compliancecopilot-main/mac-app/.build/arm64-apple-macosx/release/ComplianceCopilot"]
+    description: "Linking ./.build/arm64-apple-macosx/release/ComplianceCopilot"
+    args: ["/Library/Developer/CommandLineTools/usr/bin/swiftc","-L","/Users/apple/Desktop/compliancecopilot-main/mac-app/.build/arm64-apple-macosx/release","-o","/Users/apple/Desktop/compliancecopilot-main/mac-app/.build/arm64-apple-macosx/release/ComplianceCopilot","-module-name","ComplianceCopilot","-Xlinker","-no_warn_duplicate_libraries","-emit-executable","-Xlinker","-dead_strip","-Xlinker","-alias","-Xlinker","_ComplianceCopilot_main","-Xlinker","_main","-Xlinker","-rpath","-Xlinker","@loader_path","@/Users/apple/Desktop/compliancecopilot-main/mac-app/.build/arm64-apple-macosx/release/ComplianceCopilot.product/Objects.LinkFileList","-Xlinker","-rpath","-Xlinker","/Library/Developer/CommandLineTools/usr/lib/swift-6.2/macosx","-target","arm64-apple-macosx13.0","-framework","AppKit","-framework","WebKit","-I","/Library/Developer/CommandLineTools/Library/Developer/Frameworks","-L","/Library/Developer/CommandLineTools/Library/Developer/Frameworks","-plugin-path","/Library/Developer/CommandLineTools/usr/lib/swift/host/plugins/testing","-sdk","/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk","-g"]
+
+  "C.ComplianceCopilot-arm64-apple-macosx15.0-release.module":
+    tool: shell
+    inputs: ["/Users/apple/Desktop/compliancecopilot-main/mac-app/Sources/ComplianceCopilot/AppDelegate.swift","/Users/apple/Desktop/compliancecopilot-main/mac-app/Sources/ComplianceCopilot/DockerManager.swift","/Users/apple/Desktop/compliancecopilot-main/mac-app/Sources/ComplianceCopilot/MenuBarController.swift","/Users/apple/Desktop/compliancecopilot-main/mac-app/Sources/ComplianceCopilot/main.swift","/Users/apple/Desktop/compliancecopilot-main/mac-app/.build/arm64-apple-macosx/release/ComplianceCopilot.build/DerivedSources/resource_bundle_accessor.swift","/Users/apple/Desktop/compliancecopilot-main/mac-app/.build/arm64-apple-macosx/release/swift-version--1AB21518FC5DEDBE.txt","<ComplianceCopilot-arm64-apple-macosx15.0-release.module-resources>","/Users/apple/Desktop/compliancecopilot-main/mac-app/.build/arm64-apple-macosx/release/ComplianceCopilot.build/sources"]
+    outputs: ["/Users/apple/Desktop/compliancecopilot-main/mac-app/.build/arm64-apple-macosx/release/ComplianceCopilot.build/AppDelegate.swift.o","/Users/apple/Desktop/compliancecopilot-main/mac-app/.build/arm64-apple-macosx/release/ComplianceCopilot.build/DockerManager.swift.o","/Users/apple/Desktop/compliancecopilot-main/mac-app/.build/arm64-apple-macosx/release/ComplianceCopilot.build/MenuBarController.swift.o","/Users/apple/Desktop/compliancecopilot-main/mac-app/.build/arm64-apple-macosx/release/ComplianceCopilot.build/main.swift.o","/Users/apple/Desktop/compliancecopilot-main/mac-app/.build/arm64-apple-macosx/release/ComplianceCopilot.build/resource_bundle_accessor.swift.o","/Users/apple/Desktop/compliancecopilot-main/mac-app/.build/arm64-apple-macosx/release/Modules/ComplianceCopilot.swiftmodule"]
+    description: "Compiling Swift Module 'ComplianceCopilot' (5 sources)"
+    args: ["/Library/Developer/CommandLineTools/usr/bin/swiftc","-module-name","ComplianceCopilot","-emit-dependencies","-emit-module","-emit-module-path","/Users/apple/Desktop/compliancecopilot-main/mac-app/.build/arm64-apple-macosx/release/Modules/ComplianceCopilot.swiftmodule","-output-file-map","/Users/apple/Desktop/compliancecopilot-main/mac-app/.build/arm64-apple-macosx/release/ComplianceCopilot.build/output-file-map.json","-whole-module-optimization","-num-threads","8","-c","@/Users/apple/Desktop/compliancecopilot-main/mac-app/.build/arm64-apple-macosx/release/ComplianceCopilot.build/sources","-I","/Users/apple/Desktop/compliancecopilot-main/mac-app/.build/arm64-apple-macosx/release/Modules","-target","arm64-apple-macosx13.0","-whole-module-optimization","-num-threads","8","-serialize-diagnostics","-O","-j8","-DSWIFT_PACKAGE","-DSWIFT_MODULE_RESOURCE_BUNDLE_AVAILABLE","-module-cache-path","/Users/apple/Desktop/compliancecopilot-main/mac-app/.build/arm64-apple-macosx/release/ModuleCache","-parseable-output","-Xfrontend","-entry-point-function-name","-Xfrontend","ComplianceCopilot_main","-swift-version","5","-I","/Library/Developer/CommandLineTools/Library/Developer/Frameworks","-L","/Library/Developer/CommandLineTools/Library/Developer/Frameworks","-plugin-path","/Library/Developer/CommandLineTools/usr/lib/swift/host/plugins/testing","-sdk","/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk","-g","-Xcc","-isysroot","-Xcc","/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk","-Xcc","-fPIC","-Xcc","-g","-package-name","mac_app"]
+
+  "ComplianceCopilot-arm64-apple-macosx15.0-release.module-resources":
+    tool: phony
+    inputs: ["/Users/apple/Desktop/compliancecopilot-main/mac-app/.build/arm64-apple-macosx/release/ComplianceCopilot_ComplianceCopilot.bundle/docker-compose.yml"]
+    outputs: ["<ComplianceCopilot-arm64-apple-macosx15.0-release.module-resources>"]
+
+  "PackageStructure":
+    tool: package-structure-tool
+    inputs: ["/Users/apple/Desktop/compliancecopilot-main/mac-app/Sources/ComplianceCopilot/","/Users/apple/Desktop/compliancecopilot-main/mac-app/Package.swift","/Users/apple/Desktop/compliancecopilot-main/mac-app/Package.resolved"]
+    outputs: ["<PackageStructure>"]
+    description: "Planning build"
+    allow-missing-inputs: true
+

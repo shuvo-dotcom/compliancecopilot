@@ -5,7 +5,6 @@ from storage.documents import upload_document
 from fastapi import Depends, UploadFile
 from core.database import get_db
 import uuid
-import json
 
 
 class JobService:

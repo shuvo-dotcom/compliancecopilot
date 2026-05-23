@@ -1,5 +1,4 @@
 from minio import Minio
-from minio.error import S3Error
 from core.config import settings
 import uuid
 import io

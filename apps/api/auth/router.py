@@ -10,7 +10,6 @@ from webauthn.helpers.structs import (
     UserVerificationRequirement,
     ResidentKeyRequirement,
 )
-from webauthn.helpers.cose import COSEAlgorithmIdentifier
 from core.config import settings
 from auth.service import AuthService
 import base64

@@ -1,5 +1,4 @@
-from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import Column, String, Text, Index
+from sqlalchemy import Column, String, Text
 from sqlalchemy.dialects.postgresql import UUID
 from pgvector.sqlalchemy import Vector
 from core.database import Base, AsyncSessionLocal

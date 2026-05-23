@@ -1,3 +1,5 @@
+import uuid
+from typing import cast
 from fastapi import APIRouter, Request, HTTPException, Depends
 from webauthn import (
     generate_registration_options,
@@ -100,11 +102,11 @@ async def login_complete(request: Request, service: AuthService = Depends()):
         expected_challenge=challenge,
         expected_rp_id=settings.WEBAUTHN_RP_ID,
         expected_origin=settings.WEBAUTHN_ORIGIN,
-        credential_public_key=credential.public_key,
-        credential_current_sign_count=credential.sign_count,
+        credential_public_key=cast(bytes, credential.public_key),
+        credential_current_sign_count=cast(int, credential.sign_count),
     )
 
-    await service.update_sign_count(credential.id, verification.new_sign_count)
+    await service.update_sign_count(cast(uuid.UUID, credential.id), verification.new_sign_count)
     request.session["user_id"] = str(credential.user_id)
     request.session.pop("auth_challenge", None)
     return {"status": "authenticated"}

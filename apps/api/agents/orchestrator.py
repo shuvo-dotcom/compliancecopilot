@@ -1,5 +1,5 @@
+from typing import Any, TypedDict
 from langgraph.graph import StateGraph, END
-from typing import TypedDict
 from agents.llm_client import LLMClient
 from agents.chunker import ChunkerAgent
 from agents.retriever import RetrieverAgent
@@ -24,7 +24,7 @@ class ComplianceState(TypedDict):
     error: str | None
 
 
-def build_graph(llm_client: LLMClient) -> StateGraph:
+def build_graph(llm_client: LLMClient) -> Any:
     """
     Build the LangGraph compliance pipeline.
     llm_client is injected per-job with the user's session key.

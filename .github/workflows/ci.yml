@@ -21,13 +21,13 @@ jobs:
         run: |
           cd apps/api
           pip install -r requirements.txt
-          pip install ruff mypy pydantic-settings
+          pip install ruff mypy pydantic-settings "sqlalchemy[mypy]"
 
       - name: Lint (ruff)
         run: cd apps/api && ruff check .
 
       - name: Type check (mypy)
-        run: cd apps/api && mypy . --ignore-missing-imports
+        run: cd apps/api && mypy . --config-file mypy.ini
 
       - name: Set up Node
         uses: actions/setup-node@v4

@@ -1,3 +1,4 @@
+from typing import cast
 from fastapi import APIRouter, Request, HTTPException, Depends, UploadFile, File, Form
 from jobs.service import JobService
 from agents.orchestrator import run_compliance_job
@@ -36,7 +37,7 @@ async def create_job(
     asyncio.create_task(
         run_compliance_job(
             job_id=str(job.id),
-            document_path=job.document_path,
+            document_path=cast(str, job.document_path),
             framework=framework,
             api_key=api_key,
             model=model,

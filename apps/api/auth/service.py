@@ -5,6 +5,7 @@ from auth.models import User, WebAuthnCredential
 from core.database import get_db
 from fastapi import Depends, HTTPException
 import uuid
+import base64
 
 
 class AuthService:
@@ -24,7 +25,7 @@ class AuthService:
 
         cred = WebAuthnCredential(
             user_id=user.id,
-            credential_id=credential_id.hex(),
+            credential_id=base64.urlsafe_b64encode(credential_id).rstrip(b'=').decode(),
             public_key=public_key,
             sign_count=sign_count,
         )

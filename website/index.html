@@ -82,7 +82,12 @@
           <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
         </a>
       </div>
-      <p class="mt-5 text-sm text-slate-500">macOS · Requires Docker Desktop · Free &amp; open source</p>
+      <div class="mt-6 flex items-center justify-center gap-2 text-sm text-slate-500">
+        <svg class="w-4 h-4 text-brand-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+        <span><span id="download-count" class="text-white font-semibold">—</span> downloads</span>
+        <span class="text-slate-700">·</span>
+        <span>macOS · Free &amp; open source</span>
+      </div>
     </div>
   </section>
 
@@ -280,6 +285,24 @@ brew install --cask compliancecopilot</code></pre>
     </div>
   </section>
 
+  <!-- Support -->
+  <section class="py-16 px-6 bg-slate-900/40 border-t border-white/5">
+    <div class="max-w-xl mx-auto text-center">
+      <div class="text-3xl mb-3">☕</div>
+      <h2 class="text-2xl font-bold mb-2">Like ComplianceCopilot?</h2>
+      <p class="text-slate-400 text-sm mb-6 leading-relaxed">
+        It's free, open source, and always will be. If it saves you time on a compliance review,
+        consider buying me a coffee — it helps me keep building.
+      </p>
+      <a href="https://www.buymeacoffee.com/shuvo" target="_blank" rel="noopener"
+        class="inline-flex items-center gap-3 px-6 py-3 bg-[#FFDD00] hover:bg-[#FFE533] text-[#1a1a1a] font-bold rounded-xl transition-colors text-sm shadow-lg shadow-yellow-500/20">
+        <img src="https://cdn.buymeacoffee.com/buttons/bmc-new-btn-logo.svg" alt="" class="w-5 h-5">
+        Buy me a coffee
+      </a>
+      <p class="mt-4 text-xs text-slate-600">No pressure — using and starring the repo helps just as much ⭐</p>
+    </div>
+  </section>
+
   <!-- Footer -->
   <footer class="border-t border-white/10 py-10 px-6 bg-slate-950">
     <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
@@ -299,6 +322,20 @@ brew install --cask compliancecopilot</code></pre>
   </footer>
 
   <script>
+    // Download counter — fetches live from GitHub Releases API
+    fetch('https://api.github.com/repos/shuvo-dotcom/compliancecopilot/releases')
+      .then(r => r.json())
+      .then(releases => {
+        const total = releases.reduce((sum, release) =>
+          sum + release.assets.reduce((s, a) => s + a.download_count, 0), 0)
+        const el = document.getElementById('download-count')
+        if (el) el.textContent = total > 0 ? total.toLocaleString() : '0'
+      })
+      .catch(() => {
+        const el = document.getElementById('download-count')
+        if (el) el.textContent = '0'
+      })
+
     // Smooth scroll
     document.querySelectorAll('a[href^="#"]').forEach(a => {
       a.addEventListener('click', e => {

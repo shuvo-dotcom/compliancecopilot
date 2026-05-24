@@ -25,6 +25,11 @@ RESOURCES_SRC="$MAC_APP_DIR/Sources/$APP_NAME/Resources"
 cp "$RESOURCES_SRC/docker-compose.yml" "$APP_BUNDLE/Contents/Resources/"
 cp "$RESOURCES_SRC/.env.default"       "$APP_BUNDLE/Contents/Resources/"
 
+echo "==> Ad-hoc code signing..."
+# Sign with '-' (ad-hoc identity) — free, no Apple Developer account needed.
+# Eliminates the "damaged and can't be opened" error on macOS Ventura+.
+codesign --deep --force --sign - "$APP_BUNDLE"
+
 echo "==> Stripping quarantine attributes..."
 xattr -cr "$APP_BUNDLE"
 

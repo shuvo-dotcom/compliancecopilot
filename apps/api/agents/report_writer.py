@@ -17,6 +17,14 @@ class ReportWriterAgent:
             gaps = sum(1 for f in findings if f.get("overall_status") == "gap")
             avg_risk = round(sum(f.get("risk_score", 0) for f in findings) / total) if total else 0
 
+            # Weighted compliance: compliant=1.0, partial=0.5, gap=0.0
+            weighted_score = sum(
+                1.0 if f.get("overall_status") == "compliant" else
+                0.5 if f.get("overall_status") == "partial" else 0.0
+                for f in findings
+            )
+            compliance_percentage = round(weighted_score / total * 100) if total else 0
+
             report = {
                 "job_id": state["job_id"],
                 "framework": state["framework"],
@@ -27,7 +35,7 @@ class ReportWriterAgent:
                     "partial": partial,
                     "gaps": gaps,
                     "average_risk_score": avg_risk,
-                    "compliance_percentage": round(compliant / total * 100) if total else 0,
+                    "compliance_percentage": compliance_percentage,
                 },
                 "executive_summary": executive_summary,
                 "findings": findings,

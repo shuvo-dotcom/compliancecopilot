@@ -231,30 +231,57 @@
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
         </svg>
       </div>
-      <h2 class="text-4xl font-extrabold mb-4">Download ComplianceCopilot</h2>
-      <p class="text-slate-400 mb-8 text-lg">Free. Open source. Runs entirely on your Mac.</p>
+      <h2 class="text-4xl font-extrabold mb-4">Install ComplianceCopilot</h2>
+      <p class="text-slate-400 mb-10 text-lg">Free. Open source. Runs entirely on your Mac.</p>
 
-      <a
-        href="https://github.com/shuvo-dotcom/compliancecopilot/releases/latest/download/ComplianceCopilot.dmg"
-        class="inline-flex items-center gap-3 px-8 py-4 bg-brand-600 hover:bg-brand-500 text-white font-bold rounded-2xl transition-colors glow text-lg mb-4"
-      >
-        <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-        </svg>
-        Download for macOS
-      </a>
-
-      <div class="mt-4 flex flex-col items-center gap-2">
-        <p class="text-sm text-slate-500">macOS 13 Ventura or later · Apple Silicon &amp; Intel · Requires <a href="https://www.docker.com/products/docker-desktop/" target="_blank" class="text-brand-400 hover:underline">Docker Desktop</a></p>
-        <a href="https://github.com/shuvo-dotcom/compliancecopilot/releases" target="_blank" class="text-xs text-slate-600 hover:text-slate-400 transition-colors">All releases &amp; changelog →</a>
+      <!-- Homebrew (recommended) -->
+      <div class="p-6 glass rounded-2xl text-left mb-4">
+        <div class="flex items-center justify-between mb-3">
+          <p class="text-xs font-semibold text-brand-400 uppercase tracking-wider">Homebrew <span class="ml-2 px-2 py-0.5 bg-brand-500/20 text-brand-300 rounded-full text-xs normal-case font-normal">Recommended</span></p>
+          <button onclick="copyText('brew-cmd', this)" class="text-xs text-slate-500 hover:text-white transition-colors flex items-center gap-1">
+            <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+            Copy
+          </button>
+        </div>
+        <pre id="brew-cmd" class="text-sm text-brand-300 overflow-x-auto leading-relaxed"><code>brew tap shuvo-dotcom/compliancecopilot
+brew install --cask compliancecopilot</code></pre>
+        <p class="text-xs text-slate-500 mt-3">Installs cleanly with no security warnings. Update anytime with <span class="text-slate-400 font-mono">brew upgrade --cask compliancecopilot</span></p>
       </div>
 
-      <div class="mt-12 p-5 glass rounded-2xl text-left">
-        <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3">Or run with Docker</p>
-        <pre class="text-sm text-brand-300 overflow-x-auto leading-relaxed"><code>git clone https://github.com/shuvo-dotcom/compliancecopilot
-cd compliancecopilot
-cp .env.example .env
+      <!-- DMG fallback -->
+      <div class="p-6 glass rounded-2xl text-left mb-4">
+        <div class="flex items-center justify-between mb-3">
+          <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Direct download</p>
+        </div>
+        <a
+          href="https://github.com/shuvo-dotcom/compliancecopilot/releases/latest/download/ComplianceCopilot.dmg"
+          class="inline-flex items-center gap-2 px-5 py-2.5 bg-slate-700 hover:bg-slate-600 text-white font-medium rounded-xl transition-colors text-sm"
+        >
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+          </svg>
+          Download ComplianceCopilot.dmg
+        </a>
+        <p class="text-xs text-slate-500 mt-3">macOS 13 Ventura or later · Apple Silicon &amp; Intel</p>
+      </div>
+
+      <!-- Docker -->
+      <div class="p-6 glass rounded-2xl text-left mb-6">
+        <div class="flex items-center justify-between mb-3">
+          <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Run with Docker (advanced)</p>
+          <button onclick="copyText('docker-cmd', this)" class="text-xs text-slate-500 hover:text-white transition-colors flex items-center gap-1">
+            <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+            Copy
+          </button>
+        </div>
+        <pre id="docker-cmd" class="text-sm text-brand-300 overflow-x-auto leading-relaxed"><code>git clone https://github.com/shuvo-dotcom/compliancecopilot
+cd compliancecopilot && cp .env.example .env
 docker compose up</code></pre>
+      </div>
+
+      <div class="flex flex-col items-center gap-2">
+        <p class="text-sm text-slate-500">Requires <a href="https://www.docker.com/products/docker-desktop/" target="_blank" class="text-brand-400 hover:underline">Docker Desktop</a> for all install methods</p>
+        <a href="https://github.com/shuvo-dotcom/compliancecopilot/releases" target="_blank" class="text-xs text-slate-600 hover:text-slate-400 transition-colors">All releases &amp; changelog →</a>
       </div>
     </div>
   </section>
@@ -285,6 +312,17 @@ docker compose up</code></pre>
         document.querySelector(a.getAttribute('href'))?.scrollIntoView({ behavior: 'smooth' })
       })
     })
+
+    // Copy to clipboard
+    function copyText(id, btn) {
+      const text = document.getElementById(id).innerText
+      navigator.clipboard.writeText(text).then(() => {
+        const original = btn.innerHTML
+        btn.innerHTML = '<svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Copied!'
+        btn.classList.add('text-green-400')
+        setTimeout(() => { btn.innerHTML = original; btn.classList.remove('text-green-400') }, 2000)
+      })
+    }
   </script>
 </body>
 </html>

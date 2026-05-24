@@ -1,51 +1,34 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
   <defs>
     <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#0f172a"/>
-      <stop offset="100%" style="stop-color:#1e293b"/>
+      <stop offset="0%" style="stop-color:#ffffff"/>
+      <stop offset="100%" style="stop-color:#f1f5f9"/>
     </linearGradient>
-    <linearGradient id="shieldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+    <linearGradient id="shieldGrad" x1="20%" y1="0%" x2="80%" y2="100%">
       <stop offset="0%" style="stop-color:#38bdf8"/>
-      <stop offset="100%" style="stop-color:#0284c7"/>
+      <stop offset="100%" style="stop-color:#0369a1"/>
     </linearGradient>
-    <linearGradient id="shieldInner" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#0ea5e9;stop-opacity:0.15"/>
-      <stop offset="100%" style="stop-color:#0284c7;stop-opacity:0.05"/>
-    </linearGradient>
-    <filter id="glow">
-      <feGaussianBlur stdDeviation="10" result="blur"/>
-      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-    </filter>
-    <filter id="checkGlow">
-      <feGaussianBlur stdDeviation="8" result="blur"/>
-      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    <filter id="shieldShadow" x="-10%" y="-5%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="8" stdDeviation="16" flood-color="#0284c7" flood-opacity="0.25"/>
     </filter>
   </defs>
 
-  <!-- Background -->
+  <!-- White background -->
   <rect width="1024" height="1024" rx="230" ry="230" fill="url(#bg)"/>
 
-  <!-- Subtle corner dots -->
-  <g opacity="0.07" fill="#38bdf8">
-    <circle cx="180" cy="180" r="7"/><circle cx="300" cy="180" r="7"/>
-    <circle cx="724" cy="180" r="7"/><circle cx="844" cy="180" r="7"/>
-    <circle cx="180" cy="844" r="7"/><circle cx="300" cy="844" r="7"/>
-    <circle cx="724" cy="844" r="7"/><circle cx="844" cy="844" r="7"/>
+  <!-- Shield — centered, ~60% of canvas -->
+  <g filter="url(#shieldShadow)">
+    <path d="M512 148 L776 240 L776 500 Q776 678 512 876 Q248 678 248 500 L248 240 Z"
+      fill="url(#shieldGrad)"/>
   </g>
 
-  <!-- Shield -->
-  <path d="M512 80 L840 190 L840 500 Q840 710 512 920 Q184 710 184 500 L184 190 Z"
-    fill="url(#shieldGrad)" filter="url(#glow)" opacity="0.95"/>
-  <path d="M512 138 L792 234 L792 498 Q792 678 512 868 Q232 678 232 498 L232 234 Z"
-    fill="url(#shieldInner)" stroke="#7dd3fc" stroke-width="2" stroke-opacity="0.3"/>
-
   <!-- Checkmark -->
-  <polyline points="310,520 450,660 714,370"
+  <polyline
+    points="362,510 460,610 668,390"
     fill="none"
     stroke="white"
-    stroke-width="78"
+    stroke-width="68"
     stroke-linecap="round"
     stroke-linejoin="round"
-    filter="url(#checkGlow)"
     opacity="0.97"/>
 </svg>

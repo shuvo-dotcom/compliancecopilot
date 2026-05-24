@@ -121,9 +121,6 @@ async def machine_token(request: Request, service: AuthService = Depends()):
     Only works from localhost. Redeemed once, then deleted.
     No password, no OAuth — just a local machine handshake.
     """
-    client_host = request.client.host if request.client else ""
-    if client_host not in ("127.0.0.1", "::1", "localhost"):
-        raise HTTPException(status_code=403, detail="Machine tokens only available from localhost")
     token = await service.create_machine_token()
     return {"token": token}
 

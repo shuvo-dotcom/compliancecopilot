@@ -63,20 +63,19 @@ async def similarity_search(
     """Return top-k chunks closest to query_embedding by cosine distance."""
     async with AsyncSessionLocal() as session:
         from sqlalchemy import text
+        # Cast embedding to vector in a subquery to avoid asyncpg parameter
+        # substitution conflicts with the ::vector syntax
+        emb_str = "[" + ",".join(str(x) for x in query_embedding) + "]"
         result = await session.execute(
-            text("""
+            text(f"""
                 SELECT content, metadata,
-                       1 - (embedding <=> :embedding::vector) AS similarity
+                       1 - (embedding <=> '{emb_str}'::vector) AS similarity
                 FROM document_chunks
                 WHERE job_id = :job_id AND embedding IS NOT NULL
-                ORDER BY embedding <=> :embedding::vector
+                ORDER BY embedding <=> '{emb_str}'::vector
                 LIMIT :top_k
             """),
-            {
-                "embedding": str(query_embedding),
-                "job_id": job_id,
-                "top_k": top_k,
-            },
+            {"job_id": job_id, "top_k": top_k},
         )
         rows = result.fetchall()
         return [

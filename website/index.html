@@ -93,19 +93,16 @@
         <h2 class="text-3xl font-bold mb-3">See it in action</h2>
         <p class="text-slate-400">Watch how ComplianceCopilot analyses a policy document in minutes.</p>
       </div>
-      <!-- Video embed — replace src with your Loom/YouTube embed URL -->
-      <div class="relative rounded-2xl overflow-hidden border border-white/10 bg-slate-900 aspect-video flex items-center justify-center glow">
-        <!-- PASTE YOUR LOOM OR YOUTUBE EMBED HERE -->
-        <!-- Example: <iframe src="https://www.loom.com/embed/YOUR_VIDEO_ID" frameborder="0" allowfullscreen class="absolute inset-0 w-full h-full"></iframe> -->
-        <div class="text-center py-20 px-8">
-          <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-brand-500/20 flex items-center justify-center">
-            <svg class="w-8 h-8 text-brand-400" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M8 5v14l11-7z"/>
-            </svg>
-          </div>
-          <p class="text-slate-400 text-sm">Demo video coming soon</p>
-          <p class="text-slate-600 text-xs mt-1">Replace this placeholder with a Loom or YouTube embed</p>
-        </div>
+      <div class="relative rounded-2xl overflow-hidden border border-white/10 bg-slate-900 glow">
+        <video
+          class="w-full rounded-2xl"
+          controls
+          preload="metadata"
+          poster=""
+        >
+          <source src="demo.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
       </div>
     </div>
   </section>

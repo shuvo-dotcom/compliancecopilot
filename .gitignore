@@ -11,3 +11,4 @@ build/
 venv/
 mac-app/.build/
 build/
+CLAUDE.md

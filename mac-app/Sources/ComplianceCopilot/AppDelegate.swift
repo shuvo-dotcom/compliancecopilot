@@ -9,7 +9,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         menuBar = MenuBarController(docker: docker)
         docker.start { success in
             DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
-                self.menuBar.openInBrowser()
+                self.menuBar.openApp()
             }
         }
     }

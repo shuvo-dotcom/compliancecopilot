@@ -114,6 +114,32 @@ async def login_complete(request: Request, service: AuthService = Depends()):
     return {"status": "authenticated"}
 
 
+@router.post("/machine-token")
+async def machine_token(request: Request, service: AuthService = Depends()):
+    """
+    Generate a one-time 60-second token for the native Mac app.
+    Only works from localhost. Redeemed once, then deleted.
+    No password, no OAuth — just a local machine handshake.
+    """
+    client_host = request.client.host if request.client else ""
+    if client_host not in ("127.0.0.1", "::1", "localhost"):
+        raise HTTPException(status_code=403, detail="Machine tokens only available from localhost")
+    token = await service.create_machine_token()
+    return {"token": token}
+
+
+@router.post("/redeem-machine-token")
+async def redeem_machine_token(request: Request, service: AuthService = Depends()):
+    """Redeem a machine token for a real session. Token is deleted on use."""
+    body = await request.json()
+    token = body.get("token")
+    user_id = await service.redeem_machine_token(token)
+    if not user_id:
+        raise HTTPException(status_code=401, detail="Invalid or expired token")
+    request.session["user_id"] = user_id
+    return {"status": "authenticated"}
+
+
 @router.post("/logout")
 async def logout(request: Request):
     request.session.clear()

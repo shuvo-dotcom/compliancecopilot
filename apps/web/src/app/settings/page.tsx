@@ -3,22 +3,26 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { useLLMKey } from '@/store/llmKey'
+import { useLock } from '@/store/lock'
 
 const MODELS = [
   { id: 'gpt-4o', label: 'GPT-4o (OpenAI)' },
   { id: 'gpt-4o-mini', label: 'GPT-4o Mini (OpenAI)' },
-  { id: 'claude-sonnet-4-6', label: 'Claude Sonnet 4.6 (Anthropic)' },
-  { id: 'claude-opus-4-7', label: 'Claude Opus 4.7 (Anthropic)' },
+  { id: 'claude-opus-4-5', label: 'Claude Opus 4.5 (Anthropic)' },
+  { id: 'claude-sonnet-4-5', label: 'Claude Sonnet 4.5 (Anthropic)' },
   { id: 'gemini/gemini-1.5-flash', label: 'Gemini 1.5 Flash (Google)' },
-  { id: 'gemini/gemini-1.5-pro', label: 'Gemini 1.5 Pro (Google)' },
   { id: 'gemini/gemini-2.0-flash', label: 'Gemini 2.0 Flash (Google)' },
-  { id: 'ollama/llama3', label: 'Llama 3 (Ollama — local)' },
-  { id: 'groq/llama3-8b-8192', label: 'Llama 3 8B (Groq)' },
+  { id: 'groq/llama-3.3-70b-versatile', label: 'Llama 3.3 70B (Groq) — recommended' },
+  { id: 'groq/llama-3.1-8b-instant', label: 'Llama 3.1 8B Instant (Groq) — fastest' },
+  { id: 'groq/mixtral-8x7b-32768', label: 'Mixtral 8x7B (Groq)' },
+  { id: 'groq/gemma2-9b-it', label: 'Gemma 2 9B (Groq)' },
+  { id: 'ollama/llama3.2', label: 'Llama 3.2 (Ollama — local)' },
   { id: 'mistral/mistral-large-latest', label: 'Mistral Large' },
 ]
 
 export default function SettingsPage() {
   const { apiKey, model, setKey, clearKey, isConfigured } = useLLMKey()
+  const lock = useLock(s => s.lock)
   const [inputKey, setInputKey] = useState('')
   const [selectedModel, setSelectedModel] = useState(model)
   const [saved, setSaved] = useState(false)
@@ -37,7 +41,11 @@ export default function SettingsPage() {
       <nav className="bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between">
         <Link href="/dashboard" className="text-sm font-medium text-gray-600 hover:text-gray-900">← Dashboard</Link>
         <h1 className="text-base font-semibold text-gray-900">Settings</h1>
-        <div />
+        <button onClick={lock} title="Lock screen" className="p-1.5 rounded-lg text-gray-500 hover:text-gray-900 hover:bg-gray-100 transition-colors">
+          <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+          </svg>
+        </button>
       </nav>
 
       <main className="max-w-xl mx-auto px-6 py-8 space-y-6">

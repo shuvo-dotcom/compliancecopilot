@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0f172a"/>
+      <stop offset="100%" style="stop-color:#1e293b"/>
+    </linearGradient>
+    <linearGradient id="shieldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#38bdf8"/>
+      <stop offset="100%" style="stop-color:#0284c7"/>
+    </linearGradient>
+    <linearGradient id="shieldInner" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0ea5e9;stop-opacity:0.15"/>
+      <stop offset="100%" style="stop-color:#0284c7;stop-opacity:0.05"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <clipPath id="roundedRect">
+      <rect width="1024" height="1024" rx="230" ry="230"/>
+    </clipPath>
+  </defs>
+
+  <!-- App icon background -->
+  <rect width="1024" height="1024" rx="230" ry="230" fill="url(#bg)"/>
+
+  <!-- Subtle grid dots -->
+  <g opacity="0.08" fill="#38bdf8">
+    <circle cx="200" cy="200" r="6"/><circle cx="300" cy="200" r="6"/><circle cx="400" cy="200" r="6"/>
+    <circle cx="624" cy="200" r="6"/><circle cx="724" cy="200" r="6"/><circle cx="824" cy="200" r="6"/>
+    <circle cx="200" cy="300" r="6"/><circle cx="824" cy="300" r="6"/>
+    <circle cx="200" cy="724" r="6"/><circle cx="824" cy="724" r="6"/>
+    <circle cx="200" cy="824" r="6"/><circle cx="300" cy="824" r="6"/><circle cx="400" cy="824" r="6"/>
+    <circle cx="624" cy="824" r="6"/><circle cx="724" cy="824" r="6"/><circle cx="824" cy="824" r="6"/>
+  </g>
+
+  <!-- Shield shape -->
+  <path d="M512 140
+    L720 220
+    L720 480
+    Q720 660 512 840
+    Q304 660 304 480
+    L304 220
+    Z"
+    fill="url(#shieldGrad)"
+    filter="url(#glow)"
+    opacity="0.95"/>
+
+  <!-- Shield inner face -->
+  <path d="M512 190
+    L680 258
+    L680 478
+    Q680 632 512 790
+    Q344 632 344 478
+    L344 258
+    Z"
+    fill="url(#shieldInner)"
+    stroke="#7dd3fc"
+    stroke-width="1.5"
+    stroke-opacity="0.3"/>
+
+  <!-- Checkmark -->
+  <polyline
+    points="400,510 470,590 635,420"
+    fill="none"
+    stroke="#ffffff"
+    stroke-width="62"
+    stroke-linecap="round"
+    stroke-linejoin="round"/>
+
+</svg>

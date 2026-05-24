@@ -19,4 +19,14 @@ async def get_db() -> AsyncGenerator[AsyncSession, None]:
 
 async def init_db():
     async with engine.begin() as conn:
+        # Enable pgvector extension
+        await conn.execute(
+            __import__("sqlalchemy").text("CREATE EXTENSION IF NOT EXISTS vector")
+        )
+        # Drop document_chunks if the vector dimension changed (safe — chunks are re-generated per job)
+        await conn.execute(
+            __import__("sqlalchemy").text(
+                "DROP TABLE IF EXISTS document_chunks"
+            )
+        )
         await conn.run_sync(Base.metadata.create_all)

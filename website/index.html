@@ -178,39 +178,36 @@
         <h2 class="text-3xl font-bold mb-3">How it works</h2>
         <p class="text-slate-400">Six AI agents collaborate to produce a thorough gap report.</p>
       </div>
-      <div class="relative">
-        <div class="absolute left-6 top-0 bottom-0 w-px bg-gradient-to-b from-brand-500/60 via-brand-500/20 to-transparent hidden sm:block"></div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 text-center">
+          <div class="w-11 h-11 rounded-full bg-brand-600 flex items-center justify-center text-xs font-bold mx-auto mb-4">01</div>
+          <h4 class="font-semibold text-white mb-1">Upload</h4>
+          <p class="text-sm text-slate-400">Drop a PDF, DOCX, or TXT policy document into the dashboard.</p>
         </div>
-      </div>
-
-      <!-- Static steps since this is plain HTML -->
-      <div class="relative mt-0">
-        <div class="absolute left-[1.35rem] top-3 bottom-3 w-px bg-gradient-to-b from-brand-500/50 via-brand-500/20 to-transparent hidden sm:block"></div>
-        <div class="space-y-6">
-          <div class="flex gap-5 items-start">
-            <div class="flex-shrink-0 w-11 h-11 rounded-full bg-brand-600 flex items-center justify-center text-xs font-bold z-10">01</div>
-            <div class="pt-2"><h4 class="font-semibold text-white">Upload</h4><p class="text-sm text-slate-400 mt-0.5">Drop a PDF, DOCX, or TXT policy document into the dashboard.</p></div>
-          </div>
-          <div class="flex gap-5 items-start">
-            <div class="flex-shrink-0 w-11 h-11 rounded-full bg-brand-600/80 flex items-center justify-center text-xs font-bold z-10">02</div>
-            <div class="pt-2"><h4 class="font-semibold text-white">Chunk &amp; Embed</h4><p class="text-sm text-slate-400 mt-0.5">The document is split into overlapping chunks and stored in pgvector for semantic search.</p></div>
-          </div>
-          <div class="flex gap-5 items-start">
-            <div class="flex-shrink-0 w-11 h-11 rounded-full bg-brand-600/60 flex items-center justify-center text-xs font-bold z-10">03</div>
-            <div class="pt-2"><h4 class="font-semibold text-white">Retrieve</h4><p class="text-sm text-slate-400 mt-0.5">Relevant excerpts are matched to each GDPR or EU AI Act requirement.</p></div>
-          </div>
-          <div class="flex gap-5 items-start">
-            <div class="flex-shrink-0 w-11 h-11 rounded-full bg-brand-600/50 flex items-center justify-center text-xs font-bold z-10">04</div>
-            <div class="pt-2"><h4 class="font-semibold text-white">Gap Analysis</h4><p class="text-sm text-slate-400 mt-0.5">Each requirement is checked — Compliant, Partial, or Missing — with citations from your document.</p></div>
-          </div>
-          <div class="flex gap-5 items-start">
-            <div class="flex-shrink-0 w-11 h-11 rounded-full bg-brand-600/40 flex items-center justify-center text-xs font-bold z-10">05</div>
-            <div class="pt-2"><h4 class="font-semibold text-white">Risk Scoring</h4><p class="text-sm text-slate-400 mt-0.5">Findings are prioritised by severity and remediation urgency.</p></div>
-          </div>
-          <div class="flex gap-5 items-start">
-            <div class="flex-shrink-0 w-11 h-11 rounded-full bg-brand-600/30 flex items-center justify-center text-xs font-bold z-10">06</div>
-            <div class="pt-2"><h4 class="font-semibold text-white">Human Review &amp; Export</h4><p class="text-sm text-slate-400 mt-0.5">You review, edit findings, and approve — report is never finalised without human sign-off.</p></div>
-          </div>
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 text-center">
+          <div class="w-11 h-11 rounded-full bg-brand-600/80 flex items-center justify-center text-xs font-bold mx-auto mb-4">02</div>
+          <h4 class="font-semibold text-white mb-1">Chunk &amp; Embed</h4>
+          <p class="text-sm text-slate-400">The document is split into overlapping chunks and stored in pgvector for semantic search.</p>
+        </div>
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 text-center">
+          <div class="w-11 h-11 rounded-full bg-brand-600/60 flex items-center justify-center text-xs font-bold mx-auto mb-4">03</div>
+          <h4 class="font-semibold text-white mb-1">Retrieve</h4>
+          <p class="text-sm text-slate-400">Relevant excerpts are matched to each GDPR or EU AI Act requirement.</p>
+        </div>
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 text-center">
+          <div class="w-11 h-11 rounded-full bg-brand-600/50 flex items-center justify-center text-xs font-bold mx-auto mb-4">04</div>
+          <h4 class="font-semibold text-white mb-1">Gap Analysis</h4>
+          <p class="text-sm text-slate-400">Each requirement is checked — Compliant, Partial, or Missing — with citations from your document.</p>
+        </div>
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 text-center">
+          <div class="w-11 h-11 rounded-full bg-brand-600/40 flex items-center justify-center text-xs font-bold mx-auto mb-4">05</div>
+          <h4 class="font-semibold text-white mb-1">Risk Scoring</h4>
+          <p class="text-sm text-slate-400">Findings are prioritised by severity and remediation urgency.</p>
+        </div>
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 text-center">
+          <div class="w-11 h-11 rounded-full bg-brand-600/30 flex items-center justify-center text-xs font-bold mx-auto mb-4">06</div>
+          <h4 class="font-semibold text-white mb-1">Human Review &amp; Export</h4>
+          <p class="text-sm text-slate-400">You review, edit findings, and approve — report is never finalised without human sign-off.</p>
         </div>
       </div>
     </div>

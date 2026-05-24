@@ -6,7 +6,7 @@ from io import BytesIO
 from datetime import datetime
 from reportlab.lib import colors
 from reportlab.lib.pagesizes import A4
-from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+from reportlab.lib.styles import ParagraphStyle
 from reportlab.lib.units import mm
 from reportlab.platypus import (
     SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle,
@@ -31,7 +31,6 @@ SEVERITY_COLOR = {"critical": RED, "high": colors.HexColor("#ea580c"),
 
 
 def _styles():
-    s = getSampleStyleSheet()
     base = dict(fontName="Helvetica", leading=14)
     return {
         "h1":    ParagraphStyle("h1",    fontSize=22, textColor=WHITE,   spaceAfter=4,  **base),

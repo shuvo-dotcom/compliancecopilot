@@ -26,6 +26,7 @@ jobs:
         with:
           context: apps/web
           push: true
+          provenance: false
           build-args: NEXT_PUBLIC_API_URL=http://localhost:8000
           tags: |
             ghcr.io/shuvo-dotcom/compliancecopilot-web:latest
@@ -36,6 +37,7 @@ jobs:
         with:
           context: apps/api
           push: true
+          provenance: false
           tags: |
             ghcr.io/shuvo-dotcom/compliancecopilot-api:latest
             ghcr.io/shuvo-dotcom/compliancecopilot-api:${{ github.ref_name }}

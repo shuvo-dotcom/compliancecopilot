@@ -25,6 +25,9 @@ RESOURCES_SRC="$MAC_APP_DIR/Sources/$APP_NAME/Resources"
 cp "$RESOURCES_SRC/docker-compose.yml" "$APP_BUNDLE/Contents/Resources/"
 cp "$RESOURCES_SRC/.env.default"       "$APP_BUNDLE/Contents/Resources/"
 
+echo "==> Stripping quarantine attributes..."
+xattr -cr "$APP_BUNDLE"
+
 echo "==> Creating DMG..."
 mkdir -p "$BUILD_DIR"
 rm -f "$DMG_PATH"
@@ -33,6 +36,9 @@ hdiutil create \
     -srcfolder "$APP_BUNDLE" \
     -ov -format UDZO \
     "$DMG_PATH"
+
+# Strip quarantine from the DMG itself too
+xattr -cr "$DMG_PATH" 2>/dev/null || true
 
 echo ""
 echo "Done! DMG at: $DMG_PATH"

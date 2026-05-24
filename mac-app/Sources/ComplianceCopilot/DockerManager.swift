@@ -21,8 +21,8 @@ class DockerManager {
         run(args: ["compose", "-f", composeFile.path, "--env-file", envFile.path, "up", "-d"], completion: completion)
     }
 
-    func stop() {
-        run(args: ["compose", "-f", composeFile.path, "down"]) { _ in }
+    func stop(completion: @escaping () -> Void = {}) {
+        run(args: ["compose", "-f", composeFile.path, "down"]) { _ in completion() }
     }
 
     private func installBundledFiles() {

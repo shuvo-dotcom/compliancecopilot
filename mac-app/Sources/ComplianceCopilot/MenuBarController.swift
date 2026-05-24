@@ -4,8 +4,7 @@ import WebKit
 class MenuBarController: NSObject, NSWindowDelegate {
     private var statusItem: NSStatusItem!
     private let docker: DockerManager
-    private var window: NSWindow?
-    private var webView: WKWebView?
+    private var pollTimer: Timer?
 
     init(docker: DockerManager) {
         self.docker = docker
@@ -15,18 +14,20 @@ class MenuBarController: NSObject, NSWindowDelegate {
 
     private func buildStatusItem() {
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
-        if let btn = statusItem.button {
-            btn.image = NSImage(systemSymbolName: "checkmark.shield.fill",
-                                accessibilityDescription: "ComplianceCopilot")
-        }
+        setIcon("checkmark.shield.fill")
         let menu = NSMenu()
         menu.addItem(item("Open ComplianceCopilot", action: #selector(openApp), key: "o"))
         menu.addItem(.separator())
         menu.addItem(item("Start Stack", action: #selector(startStack), key: ""))
         menu.addItem(item("Stop Stack",  action: #selector(stopStack),  key: ""))
         menu.addItem(.separator())
-        menu.addItem(item("Quit", action: #selector(NSApplication.terminate(_:)), key: "q"))
+        menu.addItem(item("Quit", action: #selector(quitApp), key: "q"))
         statusItem.menu = menu
+    }
+
+    private func setIcon(_ symbolName: String) {
+        statusItem.button?.image = NSImage(systemSymbolName: symbolName,
+                                           accessibilityDescription: "ComplianceCopilot")
     }
 
     private func item(_ title: String, action: Selector, key: String) -> NSMenuItem {
@@ -35,62 +36,110 @@ class MenuBarController: NSObject, NSWindowDelegate {
         return i
     }
 
-    /// Fetch a one-time machine token from the local API, then open the app
-    /// window pointing at /machine-auth?token=... for seamless auto-login.
+    // MARK: - Stack readiness polling
+
+    /// Called by AppDelegate after docker.start() completes.
+    /// Polls localhost:3000 until it responds, then opens the app.
+    func waitForStackThenOpen() {
+        DispatchQueue.main.async {
+            self.setIcon("clock")
+            self.pollTimer?.invalidate()
+            self.pollTimer = Timer.scheduledTimer(withTimeInterval: 2.0, repeats: true) { [weak self] _ in
+                self?.checkReadiness()
+            }
+        }
+    }
+
+    private func checkReadiness() {
+        guard let url = URL(string: "http://localhost:3000") else { return }
+        let task = URLSession.shared.dataTask(with: url) { [weak self] _, response, _ in
+            let ready = (response as? HTTPURLResponse)?.statusCode != nil
+            if ready {
+                DispatchQueue.main.async {
+                    self?.pollTimer?.invalidate()
+                    self?.pollTimer = nil
+                    self?.setIcon("checkmark.shield.fill")
+                    self?.openApp()
+                }
+            }
+        }
+        task.resume()
+    }
+
+    // MARK: - Open app
+
+    /// Fetch a one-time machine token, then open the app in Chrome app mode.
     @objc func openApp() {
+        // If stack isn't up yet, start polling instead of opening immediately
+        guard pollTimer == nil else { return }
+
         guard let url = URL(string: "http://localhost:8000/auth/machine-token") else { return }
         var req = URLRequest(url: url)
         req.httpMethod = "POST"
         req.setValue("application/json", forHTTPHeaderField: "Content-Type")
 
-        URLSession.shared.dataTask(with: req) { data, _, error in
+        URLSession.shared.dataTask(with: req) { data, _, _ in
             DispatchQueue.main.async {
-                var target = URL(string: "http://localhost:3000")!
+                var target = "http://localhost:3000"
                 if let data = data,
                    let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
                    let token = json["token"] as? String {
-                    target = URL(string: "http://localhost:3000/machine-auth?token=\(token)")!
+                    target = "http://localhost:3000/machine-auth?token=\(token)"
                 }
-                self.showWindow(url: target)
+                self.openInBrowserAppMode(urlString: target)
             }
         }.resume()
     }
 
-    private func showWindow(url: URL) {
-        if window == nil {
-            let config = WKWebViewConfiguration()
-            config.websiteDataStore = .nonPersistent() // fresh cookies each window open
-            let wv = WKWebView(frame: NSRect(x: 0, y: 0, width: 1280, height: 820), configuration: config)
+    // MARK: - Browser launch
 
-            let win = NSWindow(
-                contentRect: NSRect(x: 0, y: 0, width: 1280, height: 820),
-                styleMask: [.titled, .closable, .miniaturizable, .resizable, .fullSizeContentView],
-                backing: .buffered, defer: false)
-            win.title = "ComplianceCopilot"
-            win.contentView = wv
-            win.center()
-            win.delegate = self
-            win.isReleasedWhenClosed = false
-            window = win
-            webView = wv
-        }
-        webView?.load(URLRequest(url: url))
-        window?.makeKeyAndOrderFront(nil)
-        NSApp.activate(ignoringOtherApps: true)
+    private func openInBrowserAppMode(urlString: String) {
+        if launchChromium(urlString: urlString) { return }
+        if launchSafari(urlString: urlString)   { return }
+        if let url = URL(string: urlString) { NSWorkspace.shared.open(url) }
     }
+
+    private func launchChromium(urlString: String) -> Bool {
+        let candidates = [
+            "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+            "/Applications/Chromium.app/Contents/MacOS/Chromium",
+            "/Applications/Brave Browser.app/Contents/MacOS/Brave Browser",
+            "/Applications/Microsoft Edge.app/Contents/MacOS/Microsoft Edge",
+        ]
+        guard let path = candidates.first(where: { FileManager.default.fileExists(atPath: $0) }) else {
+            return false
+        }
+        let task = Process()
+        task.executableURL = URL(fileURLWithPath: path)
+        task.arguments = ["--app=\(urlString)", "--window-size=1280,820", "--disable-extensions"]
+        return (try? task.run()) != nil
+    }
+
+    private func launchSafari(urlString: String) -> Bool {
+        guard FileManager.default.fileExists(atPath: "/Applications/Safari.app") else { return false }
+        let script = "tell application \"Safari\" to open location \"\(urlString)\""
+        var err: NSDictionary?
+        NSAppleScript(source: script)?.executeAndReturnError(&err)
+        return err == nil
+    }
+
+    // MARK: - Stack control
 
     @objc func startStack() {
-        docker.start { _ in
-            DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
-                self.openApp()
-            }
+        setIcon("clock")
+        docker.start { [weak self] _ in
+            self?.waitForStackThenOpen()
         }
     }
 
-    @objc func stopStack() { docker.stop() }
+    @objc func stopStack() {
+        pollTimer?.invalidate()
+        pollTimer = nil
+        setIcon("checkmark.shield.fill")
+        docker.stop {}
+    }
 
-    func windowWillClose(_ notification: Notification) {
-        window = nil
-        webView = nil
+    @objc func quitApp() {
+        NSApp.terminate(self)
     }
 }
